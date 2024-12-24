@@ -19,7 +19,19 @@ class ExpenseTracker:
                 print(f"{i}. {entry['expense'].get_summary()}")
         else:
             print("No expenses found.")
-            
+
+    def view_total_by_category(self):
+        category = input("\nEnter category to view total expenses: ")
+        expenses, total = self.db_manager.fetch_expenses_by_category(category)
+        if expenses:
+            print(f"\nExpenses for category '{category}':")
+            for i, entry in enumerate(expenses, 1):
+                print(f"{i}. {entry['expense'].get_summary()}")
+            print(f"\nTotal expenses for category '{category}': {total:.2f} EUR")
+        else:
+            print(f"No expenses found for category '{category}'.")
+
+    
     def run_menu(self):
         while True:
             print("\nPersonal Expense Tracker")
