@@ -45,3 +45,9 @@ class DatabaseManager:
         self.cursor.execute("SELECT id, date, category, description, amount FROM expenses")
         rows = self.cursor.fetchall()
         return [{"id": row[0], "expense": Expense(row[1], row[2], row[3], row[4])} for row in rows]
+
+    def fetch_expenses_by_category(self, category):
+        self.cursor.execute("SELECT id, date, category, description, amount FROM expenses WHERE LOWER(category) = LOWER(?)", (category.strip(),))
+        rows = self.cursor.fetchall()
+        total = sum(row[4] for row in rows)
+        return [{"id": row[0], "expense": Expense(row[1], row[2], row[3], row[4])} for row in rows], total
