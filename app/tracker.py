@@ -52,6 +52,9 @@ class ExpenseTracker:
         except ValueError:
             print("Invalid input. Please enter a number.")
 
+    def generate_report(self, output_format):
+        self.db_manager.export_report(output_format)
+        
     def run_menu(self):
         while True:
             print("\nPersonal Expense Tracker")
