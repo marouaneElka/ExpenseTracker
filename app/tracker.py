@@ -54,7 +54,7 @@ class ExpenseTracker:
 
     def generate_report(self, output_format):
         self.db_manager.export_report(output_format)
-        
+
     def run_menu(self):
         while True:
             print("\nPersonal Expense Tracker")
@@ -65,3 +65,25 @@ class ExpenseTracker:
             print("5. Generate Report")
             print("6. Exit")
             choice = input("Enter your choice: ")
+
+            if choice == "1":
+                self.view_expenses()
+            elif choice == "2":
+                date = input("Enter date (YYYY-MM-DD): ")
+                category = input("Enter category: ")
+                description = input("Enter description: ")
+                amount = float(input("Enter amount: "))
+                self.add_expense(date, category, description, amount)
+            elif choice == "3":
+                self.view_expenses()
+                self.view_total_by_category()
+            elif choice == "4":
+                self.remove_expense()
+            elif choice == "5":
+                output_format = input("Choose excel or csv: ").lower()
+                self.generate_report(output_format)
+            elif choice == "6":
+                print("Exiting application.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
