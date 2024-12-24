@@ -55,3 +55,19 @@ class DatabaseManager:
     def remove_expense(self, expense_id):
         self.cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
         self.connection.commit()
+
+    def export_report(self, output_format="csv"):
+        query = "SELECT * FROM expenses"
+        self.cursor.execute(query)
+        data = self.cursor.fetchall()
+
+        if output_format == "csv":
+            with open("report.csv", "w", newline="") as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(["ID", "Date", "Category", "Description", "Amount"])
+                writer.writerows(data)
+            print("Report saved as 'report.csv'.")
+        elif output_format == "excel":
+            df = pd.DataFrame(data, columns=["ID", "Date", "Category", "Description", "Amount"])
+            df.to_excel("report.xlsx", index=False)
+            print("Report saved as 'report.xlsx'.")
