@@ -51,3 +51,7 @@ class DatabaseManager:
         rows = self.cursor.fetchall()
         total = sum(row[4] for row in rows)
         return [{"id": row[0], "expense": Expense(row[1], row[2], row[3], row[4])} for row in rows], total
+
+    def remove_expense(self, expense_id):
+        self.cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+        self.connection.commit()
