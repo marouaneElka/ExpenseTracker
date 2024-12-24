@@ -28,3 +28,20 @@ class DatabaseManager:
         """)
 
         self.connection.commit()
+
+    def insert_category(self, category_name):
+        self.cursor.execute("INSERT OR IGNORE INTO categories (name) VALUES (?)", (category_name,))
+        self.connection.commit()
+
+    def insert_expense(self, expense):
+        self.insert_category(expense.category)
+        self.cursor.execute(
+            "INSERT INTO expenses (date, category, description, amount) VALUES (?, ?, ?, ?)",
+            (expense.date, expense.category, expense.description, expense.amount)
+        )
+        self.connection.commit()
+
+    def fetch_expenses(self):
+        self.cursor.execute("SELECT id, date, category, description, amount FROM expenses")
+        rows = self.cursor.fetchall()
+        return [{"id": row[0], "expense": Expense(row[1], row[2], row[3], row[4])} for row in rows]
