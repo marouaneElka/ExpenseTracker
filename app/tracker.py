@@ -1,6 +1,5 @@
 from app.db_manager import DatabaseManager
 from model.expense import Expense
-from model.category import Category
 
 class ExpenseTracker:
     def __init__(self):
@@ -72,7 +71,7 @@ class ExpenseTracker:
                 date = input("Enter date (YYYY-MM-DD): ")
                 category = input("Enter category: ")
                 description = input("Enter description: ")
-                amount = float(input("Enter amount: "))
+                amount = float(input("Enter cost: "))
                 self.add_expense(date, category, description, amount)
             elif choice == "3":
                 self.view_expenses()

@@ -1,5 +1,6 @@
 import sqlite3
 import csv
+import pandas as pd
 from model.expense import Expense
 
 class DatabaseManager:
