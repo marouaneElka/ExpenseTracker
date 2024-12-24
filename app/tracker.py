@@ -31,7 +31,27 @@ class ExpenseTracker:
         else:
             print(f"No expenses found for category '{category}'.")
 
-    
+    def remove_expense(self):
+        expenses = self.db_manager.fetch_expenses()
+        if not expenses:
+            print("No expenses to remove.")
+            return
+
+        print("\nExpenses:")
+        for i, entry in enumerate(expenses, 1):
+            print(f"{i}. {entry['expense'].get_summary()}")
+
+        try:
+            choice = int(input("Enter the number of the expense to remove: "))
+            if 1 <= choice <= len(expenses):
+                expense_id = expenses[choice - 1]["id"]
+                self.db_manager.remove_expense(expense_id)
+                print("Expense removed successfully.")
+            else:
+                print("Invalid choice.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
     def run_menu(self):
         while True:
             print("\nPersonal Expense Tracker")
