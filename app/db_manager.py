@@ -5,7 +5,7 @@ from model.expense import Expense
 
 class DatabaseManager:
     def __init__(self):
-        self.connection = sqlite3.connect("database/sample.db")
+        self.connection = sqlite3.connect("database/ExpenseTracker.db")
         self.cursor = self.connection.cursor()
         self.create_tables()
 
